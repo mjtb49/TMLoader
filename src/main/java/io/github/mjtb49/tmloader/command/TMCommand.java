@@ -18,13 +18,13 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 public class TMCommand {
 
-    private static final int addressOndy = 7;
-    private static final int addressOffdy = 8;
+    private static final int addressOnDy = 7;
+    private static final int addressOffDy = 8;
     private static final int outputDy = 3;
     //note zCorrection[zCorrection[z]] = z.
     private static final int[] zCorrection = {0,2,1,3};
 
-    private static BlockPos getPosOfAddress(int addressId, boolean readOne) {
+    public static BlockPos getPosOfAddress(int addressId, boolean readOne) {
         //one being read should give a negative z coordinate
         int zUntransformed = addressId & 0b11;
         addressId >>>= 2;
@@ -42,7 +42,7 @@ public class TMCommand {
         }
     }
 
-    private static int getAddressId(int blockX, int chunkY, int chunkZ) {
+    public static int getAddressId(int blockX, int chunkY, int chunkZ) {
 
         // x in 0-255 inc
         blockX = blockX + 128;
@@ -131,11 +131,11 @@ public class TMCommand {
         int index = 0;
         while (index < 11) {
             if ((localId & 1) == 1) {
-                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOndy, chunkZ * 16 + dz), Blocks.REDSTONE_BLOCK.getDefaultState());
-                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOffdy, chunkZ * 16 + dz), Blocks.AIR.getDefaultState());
+                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOnDy, chunkZ * 16 + dz), Blocks.REDSTONE_BLOCK.getDefaultState());
+                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOffDy, chunkZ * 16 + dz), Blocks.AIR.getDefaultState());
             } else {
-                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOffdy, chunkZ * 16 + dz), Blocks.REDSTONE_BLOCK.getDefaultState());
-                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOndy, chunkZ * 16 + dz), Blocks.AIR.getDefaultState());
+                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOffDy, chunkZ * 16 + dz), Blocks.REDSTONE_BLOCK.getDefaultState());
+                sw.setBlockState(new BlockPos(blockX, chunkY * 16 + addressOnDy, chunkZ * 16 + dz), Blocks.AIR.getDefaultState());
             }
             dz++;
             index++;
@@ -166,8 +166,8 @@ public class TMCommand {
             } else {
                 dz = 14;
             }
-            sw.setBlockState(new BlockPos(x * 16 + dx, y * 16 + addressOndy, z * 16 + dz), Blocks.REDSTONE_BLOCK.getDefaultState());
-            sw.setBlockState(new BlockPos(x * 16 + dx, y * 16 + addressOffdy, z * 16 + dz), Blocks.AIR.getDefaultState());
+            sw.setBlockState(new BlockPos(x * 16 + dx, y * 16 + addressOnDy, z * 16 + dz), Blocks.REDSTONE_BLOCK.getDefaultState());
+            sw.setBlockState(new BlockPos(x * 16 + dx, y * 16 + addressOffDy, z * 16 + dz), Blocks.AIR.getDefaultState());
         }
 
         //resetAddresses

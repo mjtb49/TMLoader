@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "tm_loader",
+  "version": "${version}",
+  "name": "TMLoader",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/TMLoader/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "io.github.mjtb49.tmloader.client.TMLoaderClient"
+    ],
+    "main": [
+      "io.github.mjtb49.tmloader.TMLoader"
+    ]
+  },
+  "mixins": [
+    "TMLoader.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.6",
+    "minecraft": "1.16.1"
+  }
+}

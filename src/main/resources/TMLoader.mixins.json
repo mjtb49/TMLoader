@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "io.github.mjtb49.tmloader.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinCommandManager"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

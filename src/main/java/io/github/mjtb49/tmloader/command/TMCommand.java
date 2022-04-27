@@ -101,7 +101,12 @@ public class TMCommand {
             //write state for if we read 0
             BlockPos pos = getPosOfAddress(address, false);
             int toWrite = Integer.parseInt(stateInstructions[0]);
-            toWrite += addresses.get(stateInstructions[2]) << 1;
+            if (addresses.containsKey(stateInstructions[2]))
+                toWrite += addresses.get(stateInstructions[2]) << 1;
+            else {
+                toWrite += (1L << 14) - 2;
+                sw.getPlayers().get(0).sendMessage(new LiteralText("Warning, state " + s + " errors with code " + stateInstructions[2] + " if 0 is read"), false);
+            }
             if (stateInstructions[1].equals("L"))
                 toWrite += 1 << 14;
             writeBitState(sw, toWrite, pos);
@@ -109,7 +114,12 @@ public class TMCommand {
             //write states if we read 1
             pos = getPosOfAddress(address, true);
             toWrite = Integer.parseInt(stateInstructions[3]) ^ 1;
-            toWrite += addresses.get(stateInstructions[5]) << 1;
+            if (addresses.containsKey(stateInstructions[5]))
+                toWrite += addresses.get(stateInstructions[5]) << 1;
+            else {
+                toWrite += (1L << 14) - 2;
+                sw.getPlayers().get(0).sendMessage(new LiteralText("Warning, state " + s + " errors with code " + stateInstructions[5] + " if 1 is read"), false);
+            }
             if (stateInstructions[4].equals("L"))
                 toWrite += 1 << 14;
             writeBitState(sw, toWrite, pos);
@@ -204,8 +214,8 @@ public class TMCommand {
                         literal("load").then(
                                 argument("path", string()).executes(
                                         c -> {
-                                            try (BufferedReader br = new BufferedReader(new FileReader(getString(c,"path")))) {
-                                                HashMap<String, Integer> addresses =  new HashMap<>();
+                                            try (BufferedReader br = new BufferedReader(new FileReader(getString(c, "path")))) {
+                                                HashMap<String, Integer> addresses = new HashMap<>();
                                                 HashMap<String, String> states = new HashMap<>();
 
                                                 addresses.put("HALT", 0);
